@@ -1,17 +1,21 @@
 package com.iespuertocruz.proyectopropietarioscasas;
 
-
 import java.net.URL;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -60,13 +64,27 @@ public class FXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-    }    
+//        try {
+//            AccederDatos.mysql("", "", "op");
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//            Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
+//            dialogoAyuda.setTitle("ERROR");
+//            dialogoAyuda.setHeaderText(null);
+//            dialogoAyuda.setContentText("No se ha podido conectar a la base de datos");
+//            dialogoAyuda.initStyle(StageStyle.UTILITY);
+//            dialogoAyuda.showAndWait();
+//            System.exit(0);
+//        }
+    }
 
     @FXML
-    private void btnVincularOnClick(ActionEvent event) {
-       
+    private void btnAnhadirPropietarioOnClick(ActionEvent event) {
+        String dni = txtDNI.getText();
+        String nombre = txtNombre.getText();
+        String apellidos = txtApellidos.getText();
+        
+        GestionDatos.insertarPropietario(dni, nombre, apellidos);
     }
-    
-}
 
+}

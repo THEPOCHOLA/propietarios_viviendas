@@ -14,7 +14,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iespuertocruz.proyectopropietarioscasas.FXMLController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iespuertocruz.proyectopropietarioscasas.FXMLController">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="847.0">
         <menus>
@@ -48,7 +48,7 @@
                         <TextField fx:id="txtNombre" layoutX="540.0" layoutY="87.0" />
                         <TextField fx:id="txtApellidos" layoutX="540.0" layoutY="121.0" prefHeight="25.0" prefWidth="239.0" />
                         <TextField fx:id="txtDNI" layoutX="540.0" layoutY="155.0" />
-                        <Button fx:id="btnAnhadirProp" layoutX="450.0" layoutY="206.0" mnemonicParsing="false" text="Añadir" />
+                        <Button fx:id="btnAnhadirProp" layoutX="450.0" layoutY="206.0" mnemonicParsing="false" onAction="#btnAnhadirPropietarioOnClick" text="Añadir" />
                         <Label layoutX="66.0" layoutY="40.0" text="Lista de propietarios" />
                         <Label layoutX="450.0" layoutY="91.0" text="Nombre:" />
                         <Label layoutX="450.0" layoutY="125.0" text="Apellidos:" />
