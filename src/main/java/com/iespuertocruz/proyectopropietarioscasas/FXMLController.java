@@ -77,6 +77,8 @@ public class FXMLController implements Initializable {
     private Button btnModificarPropietario;
     ArrayList<Dato> datos = new ArrayList<Dato>();
     private int posicionPropietarioEnTabla;
+    private Label lblResultadoPropietario;
+
     /**
      * Initializes the controller class.
      */
@@ -102,8 +104,20 @@ public class FXMLController implements Initializable {
         String dni = txtDNI.getText();
         String nombre = txtNombre.getText();
         String apellidos = txtApellidos.getText();
+        boolean insert = GestionDatos.insertarPropietario(dni, nombre, apellidos);
         
-        GestionDatos.insertarPropietario(dni, nombre, apellidos);
+        if (insert){
+            //Crear mensaje de resultado de insert
+            lblResultadoPropietario.setText("Propietario insertado con éxito");
+        }else{
+            Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
+            dialogoAyuda.setTitle("ERROR");
+            dialogoAyuda.setHeaderText(null);
+            dialogoAyuda.setContentText("No se ha podido insertar el usuario en la base de datos");
+            dialogoAyuda.initStyle(StageStyle.UTILITY);
+            dialogoAyuda.showAndWait();
+            
+        }
         mostrarEnTablaPropietario();
         
     }
@@ -114,6 +128,7 @@ public class FXMLController implements Initializable {
         columnaApellidos.setCellValueFactory(new PropertyValueFactory<Dato, String>("apellidos"));
         datos = GestionDatos.mostrarDatos();
         tablaPropietarios.setItems(FXCollections.observableArrayList(datos));
+
     }
 
     @FXML

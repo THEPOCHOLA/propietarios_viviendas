@@ -21,7 +21,9 @@ public class AccederDatos {
 
         conexion=null;
         //url que corresponda con el nombre de la base de datos
+
         String jdbcUrl = "jdbc:mysql://192.168.1.61/PropietariosViviendasDB?serverTimezone=UTC";
+
         String usuario = "root";
         String clave = "1q2w3e4r";
         

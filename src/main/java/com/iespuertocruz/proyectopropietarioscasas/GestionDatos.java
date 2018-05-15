@@ -10,6 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -18,7 +22,7 @@ import java.util.ArrayList;
 public class GestionDatos {
     
     public static boolean insertarPropietario( String DNI, String NOMBRE, String APELLIDOS ){
-        boolean resultado = true;
+        boolean resultado = false;
         try (Connection con = AccederDatos.mysql(null,null,null) ){
             Statement st = con.createStatement();
             
@@ -42,13 +46,21 @@ public class GestionDatos {
 
             st.executeUpdate(sql);  //devuelve boolean
             st.close();
-            
+            resultado = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
+            Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
+            dialogoAyuda.setTitle("ERROR");
+            dialogoAyuda.setHeaderText(null);
+            dialogoAyuda.setContentText("Ya existe ese usuario en la base de datos.");
+            dialogoAyuda.initStyle(StageStyle.UTILITY);
+            dialogoAyuda.showAndWait();
+            
         }
         return resultado;
     }
     
+
     public static ArrayList<Dato> mostrarDatos(){
         String dni = "";
         String nombre = "";
@@ -69,5 +81,32 @@ public class GestionDatos {
             ex.printStackTrace();
         }
         return salida;
+    }
+    
+    public static boolean borrarPropietario (Propietario p){
+        String dni = "'"+p.dni+"'";
+        boolean resultado = false;
+        try (Connection con = AccederDatos.mysql(null,null,null)){
+            Statement st = con.createStatement();
+            String sql = "DELETE FROM PropietariosCasas"
+                    + "WHERE ref_propietario = "
+                    + dni;
+            st.executeUpdate(sql);
+            st.close();
+            
+            
+            st = con.createStatement();
+            sql = "DELETE FROM Propietarios" +
+                            "WHERE id_propietario_dni = " +
+                            dni;
+
+            st.executeUpdate(sql);
+            st.close();
+            resultado = true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return resultado;
     }
 }
