@@ -3,9 +3,11 @@ package com.iespuertocruz.proyectopropietarioscasas;
 import java.net.URL;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,7 +16,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.StageStyle;
 
 /**
@@ -58,7 +63,20 @@ public class FXMLController implements Initializable {
     private TextField txtBuscarVivienda;
     @FXML
     private Label lblResultado;
-
+    @FXML
+    public TableView<Dato> tablaPropietarios;
+    @FXML
+    public TableColumn<Dato, String> columnaDNI;
+    @FXML
+    public TableColumn<Dato, String> columnaNombre;
+    @FXML
+    public TableColumn<Dato, String> columnaApellidos;
+    @FXML
+    private Button btnBorrarPropietario;
+    @FXML
+    private Button btnModificarPropietario;
+    ArrayList<Dato> datos = new ArrayList<Dato>();
+    private int posicionPropietarioEnTabla;
     /**
      * Initializes the controller class.
      */
@@ -76,6 +94,7 @@ public class FXMLController implements Initializable {
 //            dialogoAyuda.showAndWait();
 //            System.exit(0);
 //        }
+        mostrarEnTablaPropietario();
     }
 
     @FXML
@@ -85,6 +104,25 @@ public class FXMLController implements Initializable {
         String apellidos = txtApellidos.getText();
         
         GestionDatos.insertarPropietario(dni, nombre, apellidos);
+        mostrarEnTablaPropietario();
+        
+    }
+    
+    private void mostrarEnTablaPropietario(){
+        columnaDNI.setCellValueFactory(new PropertyValueFactory<Dato, String>("dni"));
+        columnaNombre.setCellValueFactory(new PropertyValueFactory<Dato, String>("nombre"));
+        columnaApellidos.setCellValueFactory(new PropertyValueFactory<Dato, String>("apellidos"));
+        datos = GestionDatos.mostrarDatos();
+        tablaPropietarios.setItems(FXCollections.observableArrayList(datos));
     }
 
+    @FXML
+    private void btnBorrarPropietarioOnClick(ActionEvent event) {
+        datos.remove(posicionPropietarioEnTabla);
+    }
+
+    @FXML
+    private void btnModificarPropietarioOnClick(ActionEvent event) {
+        
+    }
 }

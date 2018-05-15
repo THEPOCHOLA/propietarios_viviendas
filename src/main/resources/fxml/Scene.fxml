@@ -14,7 +14,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iespuertocruz.proyectopropietarioscasas.FXMLController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iespuertocruz.proyectopropietarioscasas.FXMLController">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="847.0">
         <menus>
@@ -53,13 +53,15 @@
                         <Label layoutX="450.0" layoutY="91.0" text="Nombre:" />
                         <Label layoutX="450.0" layoutY="125.0" text="Apellidos:" />
                         <Label layoutX="450.0" layoutY="159.0" text="DNI:" />
-                        <TableView layoutX="66.0" layoutY="87.0" prefHeight="322.0" prefWidth="332.0">
+                        <TableView fx:id="tablaPropietarios" layoutX="66.0" layoutY="87.0" prefHeight="322.0" prefWidth="332.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="DNI" />
-                            <TableColumn prefWidth="101.0" text="Nombre" />
-                              <TableColumn prefWidth="154.0" text="Apellidos" />
+                            <TableColumn fx:id="columnaDNI" prefWidth="75.0" text="DNI" />
+                            <TableColumn fx:id="columnaNombre" prefWidth="101.0" text="Nombre" />
+                              <TableColumn fx:id="columnaApellidos" prefWidth="154.0" text="Apellidos" />
                           </columns>
                         </TableView>
+                        <Button fx:id="btnBorrarPropietario" layoutX="540.0" layoutY="206.0" mnemonicParsing="false" onAction="#btnBorrarPropietarioOnClick" text="Borrar" />
+                        <Button fx:id="btnModificarPropietario" layoutX="634.0" layoutY="206.0" mnemonicParsing="false" onAction="#btnModificarPropietarioOnClick" text="Modificar" />
                      </children>
                   </AnchorPane>
                </content>

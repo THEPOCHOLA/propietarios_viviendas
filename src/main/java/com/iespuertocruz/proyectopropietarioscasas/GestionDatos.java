@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -46,5 +47,27 @@ public class GestionDatos {
             ex.printStackTrace();
         }
         return resultado;
+    }
+    
+    public static ArrayList<Dato> mostrarDatos(){
+        String dni = "";
+        String nombre = "";
+        String apellidos = "";
+        ArrayList<Dato> salida = new ArrayList<Dato>();
+        try (Connection con = AccederDatos.mysql(null,null,null) ){
+            Statement st = con.createStatement();
+            ResultSet res = st.executeQuery("SELECT * FROM Propietarios");
+            while(res.next()){
+                dni = res.getString("id_propietario_dni");
+                nombre = res.getString("nombre");
+                apellidos = res.getString("apellidos");
+                salida.add(new Dato(dni, nombre, apellidos));
+            }
+            st.close();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return salida;
     }
 }
