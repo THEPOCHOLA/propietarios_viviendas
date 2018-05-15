@@ -14,7 +14,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iespuertocruz.proyectopropietarioscasas.FXMLController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iespuertocruz.proyectopropietarioscasas.FXMLController">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="847.0">
         <menus>
@@ -60,6 +60,7 @@
                               <TableColumn prefWidth="154.0" text="Apellidos" />
                           </columns>
                         </TableView>
+                        <Label fx:id="lblResultadoPropietario" layoutX="448.0" layoutY="392.0" prefHeight="17.0" prefWidth="339.0" />
                      </children>
                   </AnchorPane>
                </content>
