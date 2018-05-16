@@ -96,10 +96,10 @@ public class GestionDatos {
             
             
 //            st = con.createStatement();
-            String sql = "DELETE FROM Propietarios" +
+            String sql = "DELETE FROM Propietarios " +
                             "WHERE id_propietario_dni = " +
                             dni;
-
+            System.out.println(sql);
             st.executeUpdate(sql);
             st.close();
             resultado = true;
