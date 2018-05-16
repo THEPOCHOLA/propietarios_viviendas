@@ -167,6 +167,7 @@ public class FXMLController implements Initializable {
         txtApellidos.setText(p.apellidos);
         txtDNI.disableProperty();
         GestionDatos.borrarPropietario(p);
+        mostrarEnTablaPropietario();
     }
 
 }
