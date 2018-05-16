@@ -88,15 +88,15 @@ public class GestionDatos {
         boolean resultado = false;
         try (Connection con = AccederDatos.mysql(null,null,null)){
             Statement st = con.createStatement();
-            String sql = "DELETE FROM PropietariosCasas"
-                    + "WHERE ref_propietario = "
-                    + dni;
-            st.executeUpdate(sql);
-            st.close();
+//            String sql = "DELETE FROM PropietariosCasas"
+//                    + "WHERE ref_propietario = "
+//                    + dni;
+//            st.executeUpdate(sql);
+//            st.close();
             
             
-            st = con.createStatement();
-            sql = "DELETE FROM Propietarios" +
+//            st = con.createStatement();
+            String sql = "DELETE FROM Propietarios" +
                             "WHERE id_propietario_dni = " +
                             dni;
 

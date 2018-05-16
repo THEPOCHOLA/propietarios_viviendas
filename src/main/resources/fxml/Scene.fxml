@@ -14,7 +14,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iespuertocruz.proyectopropietarioscasas.FXMLController">
 
 
@@ -56,7 +55,7 @@
                         <Label layoutX="450.0" layoutY="91.0" text="Nombre:" />
                         <Label layoutX="450.0" layoutY="125.0" text="Apellidos:" />
                         <Label layoutX="450.0" layoutY="159.0" text="DNI:" />
-                        <TableView fx:id="tablaPropietarios" layoutX="66.0" layoutY="87.0" prefHeight="322.0" prefWidth="332.0">
+                        <TableView fx:id="tablaPropietarios" layoutX="66.0" layoutY="87.0" onMouseClicked="#tableViewPropietariosOnClick" prefHeight="322.0" prefWidth="332.0">
                           <columns>
                             <TableColumn fx:id="columnaDNI" prefWidth="75.0" text="DNI" />
                             <TableColumn fx:id="columnaNombre" prefWidth="101.0" text="Nombre" />
@@ -64,10 +63,10 @@
                           </columns>
                         </TableView>
 
-                        <Button fx:id="btnBorrarPropietario" layoutX="540.0" layoutY="206.0" mnemonicParsing="false" onAction="#btnBorrarPropietarioOnClick" text="Borrar" />
-                        <Button fx:id="btnModificarPropietario" layoutX="634.0" layoutY="206.0" mnemonicParsing="false" onAction="#btnModificarPropietarioOnClick" text="Modificar" />
+                        <Button fx:id="btnBorrarPropietario" layoutX="540.0" layoutY="206.0" mnemonicParsing="false" onMouseClicked="#btnBorrarPropietarioOnClick" text="Borrar" />
+                        <Button fx:id="btnModificarPropietario" layoutX="634.0" layoutY="206.0" mnemonicParsing="false" onMouseClicked="#btnModificarPropietarioOnClick" text="Modificar" />
 
-                        <Label fx:id="lblResultadoPropietario" layoutX="448.0" layoutY="392.0" prefHeight="17.0" prefWidth="339.0" />
+                        <Label fx:id="lblResultadoPropietario" layoutX="448.0" layoutY="392.0" prefHeight="17.0" prefWidth="339.0" textFill="#078a03" />
 
                      </children>
                   </AnchorPane>

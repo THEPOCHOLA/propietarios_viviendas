@@ -1,13 +1,11 @@
 package com.iespuertocruz.proyectopropietarioscasas;
 
 import java.net.URL;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,6 +18,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.StageStyle;
 
 /**
@@ -29,6 +28,7 @@ import javafx.stage.StageStyle;
  */
 public class FXMLController implements Initializable {
 
+    Propietario p;
     @FXML
     private TextField txtNombre;
     @FXML
@@ -76,7 +76,7 @@ public class FXMLController implements Initializable {
     @FXML
     private Button btnModificarPropietario;
     ArrayList<Dato> datos = new ArrayList<Dato>();
-    private int posicionPropietarioEnTabla;
+    @FXML
     private Label lblResultadoPropietario;
 
     /**
@@ -96,7 +96,12 @@ public class FXMLController implements Initializable {
 //            dialogoAyuda.showAndWait();
 //            System.exit(0);
 //        }
+        p = new Propietario();
         mostrarEnTablaPropietario();
+        // ForEach que añade al ArrayList los valores de la Base de Datos.
+        for (Dato dato : datos) {
+            Almacen.agregarPropietario(new Propietario(dato.getNombre(), dato.getApellidos(), dato.getDni()));
+        }
     }
 
     @FXML
@@ -105,24 +110,26 @@ public class FXMLController implements Initializable {
         String nombre = txtNombre.getText();
         String apellidos = txtApellidos.getText();
         boolean insert = GestionDatos.insertarPropietario(dni, nombre, apellidos);
-        
-        if (insert){
+        Almacen.agregarPropietario(new Propietario(nombre, apellidos, dni));
+        if (insert) {
             //Crear mensaje de resultado de insert
             lblResultadoPropietario.setText("Propietario insertado con éxito");
-        }else{
+        } else {
             Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
             dialogoAyuda.setTitle("ERROR");
             dialogoAyuda.setHeaderText(null);
             dialogoAyuda.setContentText("No se ha podido insertar el usuario en la base de datos");
             dialogoAyuda.initStyle(StageStyle.UTILITY);
             dialogoAyuda.showAndWait();
-            
+
         }
         mostrarEnTablaPropietario();
-        
+        txtDNI.setText("");
+        txtNombre.setText("");
+        txtApellidos.setText("");
     }
-    
-    private void mostrarEnTablaPropietario(){
+
+    private void mostrarEnTablaPropietario() {
         columnaDNI.setCellValueFactory(new PropertyValueFactory<Dato, String>("dni"));
         columnaNombre.setCellValueFactory(new PropertyValueFactory<Dato, String>("nombre"));
         columnaApellidos.setCellValueFactory(new PropertyValueFactory<Dato, String>("apellidos"));
@@ -132,12 +139,34 @@ public class FXMLController implements Initializable {
     }
 
     @FXML
-    private void btnBorrarPropietarioOnClick(ActionEvent event) {
-        datos.remove(posicionPropietarioEnTabla);
+    private Propietario tableViewPropietariosOnClick(MouseEvent event) {
+        Dato d = tablaPropietarios.getSelectionModel().getSelectedItem();
+        int posicion = Almacen.buscarPropietario(d.getDni());
+        //Si la posición es -1 es que no se han añadido datos
+        if (posicion != -1) {
+            p = Almacen.propietarios.get(posicion);
+        } else {
+            System.out.println("Oh que paso suso");
+        }
+        return p;
     }
 
     @FXML
-    private void btnModificarPropietarioOnClick(ActionEvent event) {
-        
+    private void btnModificarPropietarioOnClick(MouseEvent event) {
+        p = tableViewPropietariosOnClick(event);
+        txtDNI.setText(p.dni);
+        txtNombre.setText(p.nombre);
+        txtApellidos.setText(p.apellidos);
     }
+
+    @FXML
+    private void btnBorrarPropietarioOnClick(MouseEvent event) {
+        p = tableViewPropietariosOnClick(event);
+        txtDNI.setText(p.dni);
+        txtNombre.setText(p.nombre);
+        txtApellidos.setText(p.apellidos);
+        txtDNI.disableProperty();
+        GestionDatos.borrarPropietario(p);
+    }
+
 }

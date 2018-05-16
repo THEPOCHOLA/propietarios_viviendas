@@ -19,13 +19,26 @@ public class Almacen {
         return propietarios;
     }
     
-    public static void agregarPropietario (Propietario p){
+    public static Propietario agregarPropietario (Propietario p){
         propietarios.add(p);
+        return p;
     }
     
-    public static Propietario buscarPropietario(String dni){
-        int posicion = propietarios.indexOf(dni);
-        return propietarios.get(posicion);
+    public static int buscarPropietario(String dni){
+        System.out.println(propietarios.get(0));
+        int i = 0;
+        int resultado = -1;
+        for (Propietario propietario : propietarios) {
+            //El equals es lo que hace que funcione!!!!!!!!!!!!!!!!!!!!
+            if(propietario.dni.equals(dni)){
+                resultado = i;
+            }
+            i++;
+        }
+        return resultado;
+        
+//        int posicion = propietarios.indexOf(dni);
+//        return propietarios.get(posicion);
     }
     
     
