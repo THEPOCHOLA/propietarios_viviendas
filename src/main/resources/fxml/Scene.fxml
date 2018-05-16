@@ -96,6 +96,8 @@
                             <TableColumn prefWidth="229.0" text="Dirección" />
                           </columns>
                         </TableView>
+                        <Button fx:id="btnModificarVivienda" layoutX="490.0" layoutY="309.0" mnemonicParsing="false" onAction="#btnModificarViviendaOnClick" text="Modificar" />
+                        <Button fx:id="btnBorrarVivienda" layoutX="605.0" layoutY="309.0" mnemonicParsing="false" onAction="#btnBorrarViviendaOnClick" text="Borrar" />
                      </children>
                   </AnchorPane>
                </content>

@@ -5,6 +5,7 @@
  */
 package com.iespuertocruz.proyectopropietarioscasas;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -50,5 +51,11 @@ public class Dato {
         this.apellidos.set(apellidos);
     }
 
+    //--------------------------------------------------------------------------------------------------------------------------------------------------.
+    //                                                                      VIVIENDAS
+    public SimpleIntegerProperty identificador;
+    public SimpleStringProperty direccion;
+    
+    
     
 }

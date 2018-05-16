@@ -46,8 +46,9 @@ public class Almacen {
         return casas;
     }
     
-    public static void agregarCasa(Casa c){
+    public static Casa agregarCasa(Casa c){
         casas.add(c);
+        return c;
     }
     
     public static Casa buscarCasa(String id){

@@ -134,7 +134,7 @@ public class GestionDatos {
 //        return resultado;
 //    }
     
-    public static boolean anhadirVivienda(String direccion, int metrosCuadrados, double precio, boolean ascensor, boolean garaje){
+    public static boolean anhadirVivienda(String direccion, int metrosCuadrados, double precio, int ascensor, int garaje){
         
 //        try (Connection con = AccederDatos.mysql(null,null,null) ){
 //            Statement st = con.createStatement();
@@ -176,12 +176,29 @@ public class GestionDatos {
         
         try (Connection con = AccederDatos.mysql(null, null, null)){
             Statement st = con.createStatement();
-            
-            
+            String direccio = "'"+direccion+"'";
+            String sql = "INSERT INTO Casas "
+                    + "("
+                    + ") "
+                    + "VALUES ("
+                    +direccio+ ", "
+                    +metrosCuadrados+ ", "
+                    +precio+ ", "
+                    +ascensor+ ", "
+                    +garaje+ " "
+                    + ")";
+            st.executeUpdate(sql);
+            st.close();
+            resultado = true;
         } catch (SQLException ex) {
-            
+            ex.printStackTrace();
+            Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
+            dialogoAyuda.setTitle("ERROR");
+            dialogoAyuda.setHeaderText(null);
+            dialogoAyuda.setContentText("Ya existe esa vivienda en la base de datos.");
+            dialogoAyuda.initStyle(StageStyle.UTILITY);
+            dialogoAyuda.showAndWait();
         }
-        
         
         return resultado;
     }

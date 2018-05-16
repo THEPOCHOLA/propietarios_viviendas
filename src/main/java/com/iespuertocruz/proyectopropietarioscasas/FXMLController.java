@@ -27,7 +27,7 @@ import javafx.stage.StageStyle;
  * @author Usuario
  */
 public class FXMLController implements Initializable {
-
+    Casa c;
     Propietario p;
     @FXML
     private TextField txtNombre;
@@ -78,6 +78,10 @@ public class FXMLController implements Initializable {
     ArrayList<Dato> datos = new ArrayList<Dato>();
     @FXML
     private Label lblResultadoPropietario;
+    @FXML
+    private Button btnModificarVivienda;
+    @FXML
+    private Button btnBorrarVivienda;
 
     /**
      * Initializes the controller class.
@@ -96,9 +100,10 @@ public class FXMLController implements Initializable {
 //            dialogoAyuda.showAndWait();
 //            System.exit(0);
 //        }
+        c = new Casa();
         p = new Propietario();
         mostrarEnTablaPropietario();
-        // ForEach que añade al ArrayList los valores de la Base de Datos.
+        // ForEach que añade al ArrayList los valores de la Tabla Propietarios.
         for (Dato dato : datos) {
             Almacen.agregarPropietario(new Propietario(dato.getNombre(), dato.getApellidos(), dato.getDni()));
         }
@@ -112,7 +117,7 @@ public class FXMLController implements Initializable {
         boolean insert = GestionDatos.insertarPropietario(dni, nombre, apellidos);
         Almacen.agregarPropietario(new Propietario(nombre, apellidos, dni));
         if (insert) {
-            //Crear mensaje de resultado de insert
+
             lblResultadoPropietario.setText("Propietario insertado con éxito");
         } else {
             Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
@@ -203,44 +208,53 @@ public class FXMLController implements Initializable {
      * Método para añadir Viviendas, en principio solo en la Base de Datos.
      */
     private void btnAnhadirVivienda(ActionEvent event) {
-        boolean ascensor;
-        boolean garaje;
+        int ascensor;
+        int garaje;
         String direccion = txtDireccion.getText();
         int metrosCuadrados = Integer.parseInt(txtMetros.getText());
         double precio = Double.parseDouble(txtPrecio.getText());
         // Se hace un if para saber si esta seleccionado o no y así saber si es true o false.
-        if(cbxAscensor.isSelected()){
-            ascensor = true;
-        }else {
-            ascensor = false;
+        if (cbxAscensor.isSelected()) {
+            ascensor = 1;
+        } else {
+            ascensor = 0;
         }
-        if(cbxGaraje.isSelected()){
-            garaje = true;
-        }else{
-            garaje = false;
+        if (cbxGaraje.isSelected()) {
+            garaje = 1;
+        } else {
+            garaje = 0;
         }
-        
-        boolean insert = GestionDatos.insertarPropietario(dni, nombre, apellidos);
-        Almacen.agregarPropietario(new Propietario(nombre, apellidos, dni));
+        // La variable insert obtentra true si se reailza el insert, o false si no se realiza.
+        boolean insert = GestionDatos.anhadirVivienda(direccion, metrosCuadrados, precio, ascensor, garaje);
+        // Se le añaden los valores a la Clase Casa, falta el identificador, que se realiza por consulta.
+        c = Almacen.agregarCasa(new Casa("hola", direccion, garaje, garaje, insert, precio));
         if (insert) {
-            //Crear mensaje de resultado de insert
+            //Añadir el ID en la el label, debatir, porque sale en la tabla
             lblResultadoPropietario.setText("Propietario insertado con éxito");
         } else {
             Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
             dialogoAyuda.setTitle("ERROR");
             dialogoAyuda.setHeaderText(null);
-            dialogoAyuda.setContentText("No se ha podido insertar el usuario en la base de datos");
+            dialogoAyuda.setContentText("No se ha podido insertar la vivienda en la base de datos");
             dialogoAyuda.initStyle(StageStyle.UTILITY);
             dialogoAyuda.showAndWait();
 
         }
-        mostrarEnTablaPropietario();
-        txtDNI.setText("");
-        txtNombre.setText("");
-        txtApellidos.setText("");
-        btnBorrarPropietario.setVisible(false);
-        btnModificarPropietario.setVisible(false);
+
     }
-    
-    
+
+    @FXML
+    /**
+     * Método para modificar datos de la vivienda, en principio solo en la Base de Datos.
+     */
+    private void btnModificarViviendaOnClick(ActionEvent event) {
+    }
+
+    @FXML
+    /**
+     * Método para borrar viviendas, en principio solo en la Base de Datos.
+     */
+    private void btnBorrarViviendaOnClick(ActionEvent event) {
+    }
+
 }
