@@ -27,6 +27,8 @@ import javafx.stage.StageStyle;
  * @author Usuario
  */
 public class FXMLController implements Initializable {
+
+    int contador = 0;
     Casa c;
     Propietario p;
     @FXML
@@ -82,6 +84,12 @@ public class FXMLController implements Initializable {
     private Button btnModificarVivienda;
     @FXML
     private Button btnBorrarVivienda;
+    @FXML
+    private TableColumn<Dato, Integer> columnaIDVivienda;
+    @FXML
+    private TableColumn<Dato, String> columnaDireccion;
+    @FXML
+    private TableView<Dato> tablaViviendas;
 
     /**
      * Initializes the controller class.
@@ -103,9 +111,11 @@ public class FXMLController implements Initializable {
         c = new Casa();
         p = new Propietario();
         mostrarEnTablaPropietario();
+//        mostrarEnTablaVivienda();
         // ForEach que añade al ArrayList los valores de la Tabla Propietarios.
         for (Dato dato : datos) {
             Almacen.agregarPropietario(new Propietario(dato.getNombre(), dato.getApellidos(), dato.getDni()));
+//            Almacen.agregarCasa(new Casa(dato.getIdentificador(), dato.getDireccion(), dato., contador, true, contador))
         }
     }
 
@@ -227,7 +237,7 @@ public class FXMLController implements Initializable {
         // La variable insert obtentra true si se reailza el insert, o false si no se realiza.
         boolean insert = GestionDatos.anhadirVivienda(direccion, metrosCuadrados, precio, ascensor, garaje);
         // Se le añaden los valores a la Clase Casa, falta el identificador, que se realiza por consulta.
-        c = Almacen.agregarCasa(new Casa("hola", direccion, garaje, garaje, insert, precio));
+        c =Almacen.agregarCasa(new Casa(contador, direccion, garaje, garaje, insert, precio));
         if (insert) {
             //Añadir el ID en la el label, debatir, porque sale en la tabla
             lblResultadoPropietario.setText("Propietario insertado con éxito");
@@ -238,14 +248,23 @@ public class FXMLController implements Initializable {
             dialogoAyuda.setContentText("No se ha podido insertar la vivienda en la base de datos");
             dialogoAyuda.initStyle(StageStyle.UTILITY);
             dialogoAyuda.showAndWait();
-
         }
+        mostrarEnTablaVivienda();
+
+    }
+
+    private void mostrarEnTablaVivienda() {
+        columnaIDVivienda.setCellValueFactory(new PropertyValueFactory<Dato, Integer>("identificador"));
+        columnaDireccion.setCellValueFactory(new PropertyValueFactory<Dato, String>("direccion"));
+        datos = GestionDatos.mostrarDatosVivienda();
+        tablaViviendas.setItems(FXCollections.observableArrayList(datos));
 
     }
 
     @FXML
     /**
-     * Método para modificar datos de la vivienda, en principio solo en la Base de Datos.
+     * Método para modificar datos de la vivienda, en principio solo en la Base
+     * de Datos.
      */
     private void btnModificarViviendaOnClick(ActionEvent event) {
     }
@@ -254,7 +273,30 @@ public class FXMLController implements Initializable {
     /**
      * Método para borrar viviendas, en principio solo en la Base de Datos.
      */
-    private void btnBorrarViviendaOnClick(ActionEvent event) {
+    private Casa tableViewVivendasOnClick(MouseEvent event) {
+        Dato d = tablaViviendas.getSelectionModel().getSelectedItem();
+        int posicion = Almacen.buscarCasa(d.getIdentificador());
+        //Si la posición es -1 es que no se han añadido datos
+        if (posicion != -1) {
+            c = Almacen.casas.get(posicion);
+        } else {
+            System.out.println("No está en el arrayList");
+        }
+        txtID.setText(c.identificador+"");
+        txtDireccion.setText(c.direccion);
+        btnBorrarVivienda.setVisible(true);
+        btnModificarVivienda.setVisible(true);
+        return c;
     }
 
+    @FXML
+    private void btnBorrarViviendaOnClick(MouseEvent event) {
+        c = tableViewVivendasOnClick(event);
+        GestionDatos.borrarVivienda(c);
+        mostrarEnTablaVivienda();
+        btnBorrarVivienda.setVisible(false);
+        btnModificarVivienda.setVisible(false);
+    }
+
+    
 }

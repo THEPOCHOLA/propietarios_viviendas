@@ -14,7 +14,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iespuertocruz.proyectopropietarioscasas.FXMLController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iespuertocruz.proyectopropietarioscasas.FXMLController">
 
 
    <children>
@@ -90,14 +90,14 @@
                         <CheckBox fx:id="cbxAscensor" layoutX="536.0" layoutY="193.0" mnemonicParsing="false" />
                         <CheckBox fx:id="cbxGaraje" layoutX="536.0" layoutY="228.0" mnemonicParsing="false" />
                         <TextField fx:id="txtPrecio" layoutX="536.0" layoutY="155.0" prefWidth="100.0" />
-                        <TableView layoutX="46.0" layoutY="87.0" prefHeight="324.0" prefWidth="312.0">
+                        <TableView fx:id="tablaViviendas" layoutX="46.0" layoutY="87.0" onMouseClicked="#tableViewVivendasOnClick" prefHeight="324.0" prefWidth="312.0">
                           <columns>
-                            <TableColumn prefWidth="82.0" text="ID" />
-                            <TableColumn prefWidth="229.0" text="Dirección" />
+                            <TableColumn fx:id="columnaIDVivienda" prefWidth="82.0" text="ID" />
+                            <TableColumn fx:id="columnaDireccion" prefWidth="229.0" text="Dirección" />
                           </columns>
                         </TableView>
                         <Button fx:id="btnModificarVivienda" layoutX="490.0" layoutY="309.0" mnemonicParsing="false" onAction="#btnModificarViviendaOnClick" text="Modificar" />
-                        <Button fx:id="btnBorrarVivienda" layoutX="605.0" layoutY="309.0" mnemonicParsing="false" onAction="#btnBorrarViviendaOnClick" text="Borrar" />
+                        <Button fx:id="btnBorrarVivienda" layoutX="605.0" layoutY="309.0" mnemonicParsing="false" onMouseClicked="#btnBorrarViviendaOnClick" text="Borrar" />
                      </children>
                   </AnchorPane>
                </content>

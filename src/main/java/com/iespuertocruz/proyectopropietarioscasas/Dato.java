@@ -21,10 +21,6 @@ public class Dato {
         this.dni = new SimpleStringProperty(dni);
         this.nombre = new SimpleStringProperty(nombre);
         this.apellidos = new SimpleStringProperty(apellidos);
-//        this.importeCuota = importeCuota;
-//        this.intereses = intereses;
-//        this.amortizado = amortizado;
-//        this.pendienteDePago = pendienteDePago;
     }
 
     public String getDni() {
@@ -56,6 +52,26 @@ public class Dato {
     public SimpleIntegerProperty identificador;
     public SimpleStringProperty direccion;
     
+    public Dato(int identificador, String direccion) {
+        this.identificador = new SimpleIntegerProperty(identificador);
+        this.direccion = new SimpleStringProperty(direccion);
+    }
+    
+    public int getIdentificador() {
+        return identificador.get();
+    }
+
+    public String getDireccion() {
+        return direccion.get();
+    }
+    
+    public void setIdentificador(int identificador) {
+        this.identificador.set(identificador);
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion.set(direccion);
+    }
     
     
 }

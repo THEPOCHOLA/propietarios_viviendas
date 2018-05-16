@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Casa {
     
     @XmlElement(name = "ID")
-    String identificador;
+    int identificador;
     @XmlElement(name = "direccion")
     String direccion;
     @XmlElement(name = "metros")
@@ -33,6 +33,8 @@ public class Casa {
     
     private ArrayList<Propietario> misPropietarios;
 
+    
+
     public ArrayList<Propietario> getPropietarios() {
         return misPropietarios;
     }
@@ -44,7 +46,7 @@ public class Casa {
     public Casa() {
     } //necesitamos un constructor por defecto para marshall
 
-    public Casa(String identificador, String direccion, int metros, int planta, boolean ascensor,
+    public Casa(int identificador, String direccion, int metros, int planta, boolean ascensor,
         double precio) {
         this.identificador = identificador;
         this.direccion = direccion;

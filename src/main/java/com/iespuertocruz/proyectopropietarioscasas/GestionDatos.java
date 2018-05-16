@@ -89,15 +89,15 @@ public class GestionDatos {
         try (Connection con = AccederDatos.mysql(null,null,null)){
             Statement st = con.createStatement();
 //            String sql = "DELETE FROM PropietariosCasas"
-//                    + "WHERE ref_propietario = "
+//                    + " WHERE ref_propietario = "
 //                    + dni;
 //            st.executeUpdate(sql);
 //            st.close();
             
             
 //            st = con.createStatement();
-            String sql = "DELETE FROM Propietarios " +
-                            "WHERE id_propietario_dni = " +
+            String sql = "DELETE FROM Propietarios" +
+                            " WHERE id_propietario_dni = " +
                             dni;
             System.out.println(sql);
             st.executeUpdate(sql);
@@ -135,43 +135,6 @@ public class GestionDatos {
 //    }
     
     public static boolean anhadirVivienda(String direccion, int metrosCuadrados, double precio, int ascensor, int garaje){
-        
-//        try (Connection con = AccederDatos.mysql(null,null,null) ){
-//            Statement st = con.createStatement();
-//            
-//            //se pone entre  comilla simple para que lo pille como string
-//            
-//            String dni = "'"+DNI+"'";
-//            String nombre = "'"+NOMBRE+"'";
-//            String apellidos = "'"+APELLIDOS+"'";
-//            
-//            String sql = "INSERT INTO Propietarios" +
-//                            "(" +
-//                            "   id_propietario_dni, " +
-//                            "   nombre, " +
-//                            "   apellidos " + 
-//                            ") " +
-//                            "VALUES (" +
-//                                dni + ", " +
-//                                nombre + ", " +
-//                                apellidos  +
-//                            ")" ; 
-//
-//            st.executeUpdate(sql);  //devuelve boolean
-//            st.close();
-//            resultado = true;
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//            Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
-//            dialogoAyuda.setTitle("ERROR");
-//            dialogoAyuda.setHeaderText(null);
-//            dialogoAyuda.setContentText("Ya existe ese usuario en la base de datos.");
-//            dialogoAyuda.initStyle(StageStyle.UTILITY);
-//            dialogoAyuda.showAndWait();
-//            
-//        }
-//        return resultado;
-        
         boolean resultado = false;
         
         try (Connection con = AccederDatos.mysql(null, null, null)){
@@ -179,11 +142,16 @@ public class GestionDatos {
             String direccio = "'"+direccion+"'";
             String sql = "INSERT INTO Casas "
                     + "("
+                    +"direccion, " 
+                    +"precio, "
+                    +"metrosCuadrado, "
+                    +"ascensor, " 
+                    +"garaje "
                     + ") "
                     + "VALUES ("
                     +direccio+ ", "
-                    +metrosCuadrados+ ", "
                     +precio+ ", "
+                    +metrosCuadrados+ ", "
                     +ascensor+ ", "
                     +garaje+ " "
                     + ")";
@@ -200,6 +168,71 @@ public class GestionDatos {
             dialogoAyuda.showAndWait();
         }
         
+        return resultado;
+    }
+    
+    public static ArrayList<Dato> mostrarDatosVivienda(){
+        int identificador = 0;
+        String direccion = "";
+        ArrayList<Dato> salida = new ArrayList<Dato>();
+        try (Connection con = AccederDatos.mysql(null,null,null) ){
+            Statement st = con.createStatement();
+            ResultSet res = st.executeQuery("SELECT id_casa, direccion FROM Casas");
+            while(res.next()){
+                identificador = res.getInt("id_casa");
+                direccion = res.getString("direccion");
+                salida.add(new Dato(identificador, direccion));
+            }
+            st.close();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return salida;
+    }
+    
+    public static boolean borrarVivienda (Casa c){
+        
+        boolean resultado = false;
+        try (Connection con = AccederDatos.mysql(null,null,null)){
+            Statement st = con.createStatement();
+//            String sql = "DELETE FROM PropietariosCasas"
+//                    + " WHERE ref_propietario = "
+//                    + dni;
+//            st.executeUpdate(sql);
+//            st.close();
+            
+            
+//            st = con.createStatement();
+            String sql = "DELETE FROM Casas" +
+                            " WHERE id_casa = " +
+                            c.identificador;
+            System.out.println(sql);
+            st.executeUpdate(sql);
+            st.close();
+            resultado = true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return resultado;
+    }
+    
+    public static int idCasa(Casa c){
+        int resultado = 0;
+        String direccion = "'"+c.direccion+"'";
+        try (Connection con = AccederDatos.mysql(null, null, null)){
+            Statement st = con.createStatement();
+            String sql = "SELECT id_casa"
+                    + " FROM Casas"
+                    + " WHERE direccion = "+direccion;
+            resultado = st.executeUpdate(sql);
+            
+            st.close();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         return resultado;
     }
 }

@@ -25,7 +25,7 @@ public class Almacen {
     }
     
     public static int buscarPropietario(String dni){
-        System.out.println(propietarios.get(0));
+        
         int i = 0;
         int resultado = -1;
         for (Propietario propietario : propietarios) {
@@ -33,6 +33,7 @@ public class Almacen {
             if(propietario.dni.equals(dni)){
                 resultado = i;
             }
+            System.out.println(propietarios.get(i));
             i++;
         }
         return resultado;
@@ -51,9 +52,20 @@ public class Almacen {
         return c;
     }
     
-    public static Casa buscarCasa(String id){
-        int posicion = casas.indexOf(id);
-        return casas.get(posicion);
+    public static int buscarCasa(int id){
+        int i = 0;
+        int resultado = -1;
+        for (Propietario propietario : propietarios) {
+            //El equals es lo que hace que funcione!!!!!!!!!!!!!!!!!!!!
+            if(propietario.dni.equals(id)){
+                resultado = i;
+            }
+            System.out.println(propietarios.get(i));
+            i++;
+        }
+        return resultado;
+//        int posicion = casas.indexOf(id);
+//        return casas.get(posicion);
     }
     
     
