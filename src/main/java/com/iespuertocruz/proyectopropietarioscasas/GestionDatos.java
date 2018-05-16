@@ -61,7 +61,7 @@ public class GestionDatos {
     }
     
 
-    public static ArrayList<Dato> mostrarDatos(){
+    public static ArrayList<Dato> mostrarDatosPropietarios(){
         String dni = "";
         String nombre = "";
         String apellidos = "";
@@ -107,6 +107,82 @@ public class GestionDatos {
             ex.printStackTrace();
         }
 
+        return resultado;
+    }
+    
+//    public static boolean modificarPopietario (String identificador, String DNI, String NOMBRE, String APELLIDOS){
+//        String ident = "'" + identificador + "'";
+//        String dni = "'" + DNI + "'";
+//        String nombre = "'" + NOMBRE + "'";
+//        String apellidos = "'" + APELLIDOS + "'";
+//        
+//        boolean resultado = false;
+//        try (Connection con = AccederDatos.mysql(null, null, null)){
+//            Statement st = con.createStatement();
+//            String sql = "UPDATE Propietarios " +
+//                            "SET " +
+//                            "id_propietario_dni = "+dni+","+
+//                            "nombre = "+nombre+","+
+//                            "apellidos = "+apellidos+ 
+//                            " WHERE Propietarios . id_propietario_dni = "+ident;
+//            st.executeUpdate(sql);
+//            st.close();
+//            resultado = true;
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
+//        return resultado;
+//    }
+    
+    public static boolean anhadirVivienda(String direccion, int metrosCuadrados, double precio, boolean ascensor, boolean garaje){
+        
+//        try (Connection con = AccederDatos.mysql(null,null,null) ){
+//            Statement st = con.createStatement();
+//            
+//            //se pone entre  comilla simple para que lo pille como string
+//            
+//            String dni = "'"+DNI+"'";
+//            String nombre = "'"+NOMBRE+"'";
+//            String apellidos = "'"+APELLIDOS+"'";
+//            
+//            String sql = "INSERT INTO Propietarios" +
+//                            "(" +
+//                            "   id_propietario_dni, " +
+//                            "   nombre, " +
+//                            "   apellidos " + 
+//                            ") " +
+//                            "VALUES (" +
+//                                dni + ", " +
+//                                nombre + ", " +
+//                                apellidos  +
+//                            ")" ; 
+//
+//            st.executeUpdate(sql);  //devuelve boolean
+//            st.close();
+//            resultado = true;
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//            Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
+//            dialogoAyuda.setTitle("ERROR");
+//            dialogoAyuda.setHeaderText(null);
+//            dialogoAyuda.setContentText("Ya existe ese usuario en la base de datos.");
+//            dialogoAyuda.initStyle(StageStyle.UTILITY);
+//            dialogoAyuda.showAndWait();
+//            
+//        }
+//        return resultado;
+        
+        boolean resultado = false;
+        
+        try (Connection con = AccederDatos.mysql(null, null, null)){
+            Statement st = con.createStatement();
+            
+            
+        } catch (SQLException ex) {
+            
+        }
+        
+        
         return resultado;
     }
 }

@@ -127,13 +127,15 @@ public class FXMLController implements Initializable {
         txtDNI.setText("");
         txtNombre.setText("");
         txtApellidos.setText("");
+        btnBorrarPropietario.setVisible(false);
+        btnModificarPropietario.setVisible(false);
     }
 
     private void mostrarEnTablaPropietario() {
         columnaDNI.setCellValueFactory(new PropertyValueFactory<Dato, String>("dni"));
         columnaNombre.setCellValueFactory(new PropertyValueFactory<Dato, String>("nombre"));
         columnaApellidos.setCellValueFactory(new PropertyValueFactory<Dato, String>("apellidos"));
-        datos = GestionDatos.mostrarDatos();
+        datos = GestionDatos.mostrarDatosPropietarios();
         tablaPropietarios.setItems(FXCollections.observableArrayList(datos));
 
     }
@@ -146,28 +148,99 @@ public class FXMLController implements Initializable {
         if (posicion != -1) {
             p = Almacen.propietarios.get(posicion);
         } else {
-            System.out.println("Oh que paso suso");
+            System.out.println("No está en el arrayList");
         }
+        txtDNI.setText(p.dni);
+        txtNombre.setText(p.nombre);
+        txtApellidos.setText(p.apellidos);
+        btnBorrarPropietario.setVisible(true);
+        btnModificarPropietario.setVisible(true);
         return p;
     }
 
     @FXML
     private void btnModificarPropietarioOnClick(MouseEvent event) {
-        p = tableViewPropietariosOnClick(event);
-        txtDNI.setText(p.dni);
-        txtNombre.setText(p.nombre);
-        txtApellidos.setText(p.apellidos);
+//        p = tableViewPropietariosOnClick(event);
+//        String identificador = p.dni;
+//        String dni = txtDNI.getText();
+//        String nombre = txtNombre.getText();
+//        String apellidos = txtApellidos.getText();
+//        
+//        boolean insert = GestionDatos.modificarPopietario(identificador, dni, nombre, apellidos);
+//        if (insert) {
+//            //Crear mensaje de resultado de insert
+//            lblResultadoPropietario.setText("Propietario modificado con éxito");
+//        } else {
+//            Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
+//            dialogoAyuda.setTitle("ERROR");
+//            dialogoAyuda.setHeaderText(null);
+//            dialogoAyuda.setContentText("No se ha podido modificar el usuario en la base de datos");
+//            dialogoAyuda.initStyle(StageStyle.UTILITY);
+//            dialogoAyuda.showAndWait();
+//
+//        }
+//        mostrarEnTablaPropietario();
     }
 
     @FXML
     private void btnBorrarPropietarioOnClick(MouseEvent event) {
         p = tableViewPropietariosOnClick(event);
-        txtDNI.setText(p.dni);
-        txtNombre.setText(p.nombre);
-        txtApellidos.setText(p.apellidos);
         txtDNI.disableProperty();
+        txtNombre.disableProperty();
+        txtApellidos.disableProperty();
         GestionDatos.borrarPropietario(p);
         mostrarEnTablaPropietario();
+        btnBorrarPropietario.setVisible(false);
+        btnModificarPropietario.setVisible(false);
+        txtDNI.setText("");
+        txtNombre.setText("");
+        txtApellidos.setText("");
     }
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 
+    @FXML
+    /**
+     * Método para añadir Viviendas, en principio solo en la Base de Datos.
+     */
+    private void btnAnhadirVivienda(ActionEvent event) {
+        boolean ascensor;
+        boolean garaje;
+        String direccion = txtDireccion.getText();
+        int metrosCuadrados = Integer.parseInt(txtMetros.getText());
+        double precio = Double.parseDouble(txtPrecio.getText());
+        // Se hace un if para saber si esta seleccionado o no y así saber si es true o false.
+        if(cbxAscensor.isSelected()){
+            ascensor = true;
+        }else {
+            ascensor = false;
+        }
+        if(cbxGaraje.isSelected()){
+            garaje = true;
+        }else{
+            garaje = false;
+        }
+        
+        boolean insert = GestionDatos.insertarPropietario(dni, nombre, apellidos);
+        Almacen.agregarPropietario(new Propietario(nombre, apellidos, dni));
+        if (insert) {
+            //Crear mensaje de resultado de insert
+            lblResultadoPropietario.setText("Propietario insertado con éxito");
+        } else {
+            Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
+            dialogoAyuda.setTitle("ERROR");
+            dialogoAyuda.setHeaderText(null);
+            dialogoAyuda.setContentText("No se ha podido insertar el usuario en la base de datos");
+            dialogoAyuda.initStyle(StageStyle.UTILITY);
+            dialogoAyuda.showAndWait();
+
+        }
+        mostrarEnTablaPropietario();
+        txtDNI.setText("");
+        txtNombre.setText("");
+        txtApellidos.setText("");
+        btnBorrarPropietario.setVisible(false);
+        btnModificarPropietario.setVisible(false);
+    }
+    
+    
 }
