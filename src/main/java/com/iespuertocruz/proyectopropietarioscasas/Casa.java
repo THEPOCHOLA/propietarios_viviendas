@@ -22,14 +22,12 @@ public class Casa {
     String direccion;
     @XmlElement(name = "metros")
     int metros;
-    @XmlElement(name = "planta")
-    int planta;
-    @XmlElement(name = "ascensor")
-    boolean ascensor;
-    @XmlElement(name = "garaje")
-    boolean garaje;
     @XmlElement(name = "precio")
     double precio;
+    @XmlElement(name = "ascensor")
+    int ascensor;
+    @XmlElement(name = "garaje")
+    int garaje;
     
     private ArrayList<Propietario> misPropietarios;
 
@@ -46,13 +44,19 @@ public class Casa {
     public Casa() {
     } //necesitamos un constructor por defecto para marshall
 
-    public Casa(int identificador, String direccion, int metros, int planta, boolean ascensor,
+    public Casa(int identificador, String direccion, int metros, int garaje, int ascensor,
         double precio) {
         this.identificador = identificador;
         this.direccion = direccion;
         this.metros = metros;
-        this.planta = planta;
+        this.garaje = garaje;
         this.ascensor = ascensor;
         this.precio = precio;
     }
+
+    public Casa(int identificador, String direccion) {
+        this.identificador = identificador;
+        this.direccion = direccion;
+    }
+    
 }
