@@ -116,7 +116,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="lvVincularPropietarios" layoutX="127.0" layoutY="83.0" prefHeight="300.0" prefWidth="250.0" />
+                        <ListView fx:id="lvVincularPropietarios" layoutX="127.0" layoutY="83.0" onMouseClicked="#listViewOnClick" prefHeight="300.0" prefWidth="250.0" />
                         <ListView fx:id="lvVincularViviendas" layoutX="473.0" layoutY="83.0" prefHeight="300.0" prefWidth="250.0" />
                         <Button fx:id="btnVincular" layoutX="394.0" layoutY="407.0" mnemonicParsing="false" text="Vincular" />
                         <Label alignment="CENTER" layoutX="127.0" layoutY="30.0" prefWidth="225.0" text="Propietarios" />

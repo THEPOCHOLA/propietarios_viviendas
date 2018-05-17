@@ -55,7 +55,7 @@ public class Propietario {
 
     @Override
     public String toString() {
-        return "Propietario{" + "casas=" + misCasas + ", nombre=" + nombre + ", apellidos=" + apellidos + ", dni=" + dni + '}';
+        return dni;
     }
     
     

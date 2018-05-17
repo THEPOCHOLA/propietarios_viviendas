@@ -54,7 +54,7 @@ public class FXMLController implements Initializable {
     @FXML
     private TextField txtPrecio;
     @FXML
-    private ListView<Propietario> lvVincularPropietarios;
+    private ListView<ArrayList<Propietario>> lvVincularPropietarios;
     @FXML
     private ListView<?> lvVincularViviendas;
     @FXML
@@ -308,17 +308,20 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void buscarPropietario(KeyEvent event) {
-        
+        ArrayList<Propietario> propBuscar = new ArrayList<Propietario>();
         if (event.getCode().toString().equals("ENTER")){
             String propietarioBuscar = txtBuscarPropietario.getText();
-            Propietario propietarioEncontrado = GestionDatos.buscarPropietario(propietarioBuscar);
-            lvVincularPropietarios.getItems().add(propietarioEncontrado);
+            propBuscar = GestionDatos.buscarPropietario(propietarioBuscar);
+            lvVincularPropietarios.getItems().add(propBuscar);
             
         }
     }
-    
-    
-    
 
-    
+    @FXML
+    private void listViewOnClick(MouseEvent event) {
+        ArrayList<Propietario> pList = lvVincularPropietarios.getSelectionModel().getSelectedItem();
+        Alert dialog = new Alert(Alert.AlertType.WARNING);
+        dialog.setContentText("Datos: \n"+ pList.toString());
+        dialog.showAndWait();
+    }       
 }

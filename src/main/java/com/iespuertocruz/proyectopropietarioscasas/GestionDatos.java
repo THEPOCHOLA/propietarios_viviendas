@@ -168,23 +168,23 @@ public class GestionDatos {
         return resultado;
     }
     
-    public static Propietario buscarPropietario(String dni){
-        Propietario pEncontrado = new Propietario();
-        String identificador = "'"+dni+"'";
+    public static ArrayList<Propietario> buscarPropietario(String dni){
+        ArrayList<Propietario> salidaPropietario = new ArrayList<Propietario>();
+        String identificador = "'%"+dni+"%'";
         try (Connection con = AccederDatos.mysql(null, null, null)){
             Statement st = con.createStatement();
-            ResultSet res = st.executeQuery("SELECT id_propietario_dni, nombre, apellidos FROM Propietarios");
+            ResultSet res = st.executeQuery("SELECT id_propietario_dni, nombre, apellidos FROM Propietarios WHERE id_propietario_dni like "+identificador);
             while(res.next()){
                 String dniEncontrado = res.getString("id_propietario_dni");
                 String nomEncontrado = res.getString("nombre");
                 String apelEncotrado = res.getString("apellidos");
-                pEncontrado = new Propietario(nomEncontrado, apelEncotrado, dniEncontrado);
+                salidaPropietario.add(new Propietario(nomEncontrado, apelEncotrado, dniEncontrado));
             }
             st.close();
         } catch (SQLException ex){
             ex.printStackTrace();
         }
-        return pEncontrado;
+        return salidaPropietario;
     }
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------
     public static ArrayList<Dato> mostrarDatosVivienda(){
@@ -252,4 +252,25 @@ public class GestionDatos {
         }
         return identificador;
     }
+    //No está terminado
+    
+    
+//    public static ArrayList<Casa> buscarCasa(String dni){
+//        ArrayList<Propietario> salidaPropietario = new ArrayList<Propietario>();
+//        String identificador = "'%"+dni+"%'";
+//        try (Connection con = AccederDatos.mysql(null, null, null)){
+//            Statement st = con.createStatement();
+//            ResultSet res = st.executeQuery("SELECT id_propietario_dni, nombre, apellidos FROM Propietarios WHERE id_propietario_dni like "+identificador);
+//            while(res.next()){
+//                String dniEncontrado = res.getString("id_propietario_dni");
+//                String nomEncontrado = res.getString("nombre");
+//                String apelEncotrado = res.getString("apellidos");
+//                salidaPropietario.add(new Propietario(nomEncontrado, apelEncotrado, dniEncontrado));
+//            }
+//            st.close();
+//        } catch (SQLException ex){
+//            ex.printStackTrace();
+//        }
+//        return salidaPropietario;
+//    }
 }
