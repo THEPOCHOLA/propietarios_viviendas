@@ -25,7 +25,6 @@ public class Almacen {
     }
     
     public static int buscarPropietario(String dni){
-        
         int i = 0;
         int resultado = -1;
         for (Propietario propietario : propietarios) {

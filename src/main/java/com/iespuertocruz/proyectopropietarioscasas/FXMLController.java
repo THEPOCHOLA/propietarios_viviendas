@@ -189,8 +189,10 @@ public class FXMLController implements Initializable {
         String apellidos = txtApellidos.getText();
         
         boolean insert = GestionDatos.modificarPopietario(dni, nombre, apellidos);
+        Propietario aModificar = Almacen.propietarios.get(Almacen.buscarPropietario(dni));
+        aModificar.apellidos = apellidos;
+        aModificar.nombre = nombre;
         if (insert) {
-            //Crear mensaje de resultado de insert
             lblResultadoPropietario.setText("Propietario modificado con éxito");
         } else {
             Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
@@ -199,7 +201,6 @@ public class FXMLController implements Initializable {
             dialogoAyuda.setContentText("No se ha podido modificar el usuario en la base de datos");
             dialogoAyuda.initStyle(StageStyle.UTILITY);
             dialogoAyuda.showAndWait();
-
         }
         mostrarEnTablaPropietario();
     }
