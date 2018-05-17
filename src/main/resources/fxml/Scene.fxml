@@ -14,7 +14,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iespuertocruz.proyectopropietarioscasas.FXMLController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iespuertocruz.proyectopropietarioscasas.FXMLController">
 
 
    <children>
@@ -66,7 +66,7 @@
                         <Button fx:id="btnBorrarPropietario" layoutX="540.0" layoutY="206.0" mnemonicParsing="false" onMouseClicked="#btnBorrarPropietarioOnClick" text="Borrar" visible="false" />
                         <Button fx:id="btnModificarPropietario" layoutX="634.0" layoutY="206.0" mnemonicParsing="false" onMouseClicked="#btnModificarPropietarioOnClick" text="Modificar" visible="false" />
 
-                        <Label fx:id="lblResultadoPropietario" layoutX="448.0" layoutY="392.0" prefHeight="17.0" prefWidth="339.0" textFill="#078a03" />
+                        <Label fx:id="lblResultadoPropietario" layoutX="450.0" layoutY="392.0" prefHeight="17.0" prefWidth="339.0" textFill="#078a03" />
 
                      </children>
                   </AnchorPane>
@@ -76,12 +76,11 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="371.0" layoutY="40.0" text="Datos de la nueva vivienda:" />
-                        <TextField fx:id="txtID" disable="true" editable="false" layoutX="710.0" layoutY="53.0" prefHeight="25.0" prefWidth="86.0" promptText="ID vivienda" />
+                        <Label layoutX="400.0" layoutY="40.0" text="Datos de la nueva vivienda" />
                         <TextField fx:id="txtDireccion" layoutX="536.0" layoutY="87.0" prefHeight="25.0" prefWidth="260.0" />
                         <TextField fx:id="txtMetros" layoutX="536.0" layoutY="121.0" prefHeight="25.0" prefWidth="100.0" />
                         <Button fx:id="btnAnhadirVivienda" layoutX="400.0" layoutY="309.0" mnemonicParsing="false" onAction="#btnAnhadirVivienda" text="Añadir" />
-                        <Label layoutX="46.0" layoutY="40.0" text="Lista de viviendas" />
+                        <Label layoutX="66.0" layoutY="40.0" text="Lista de viviendas" />
                         <Label layoutX="400.0" layoutY="91.0" text="Dirección:" />
                         <Label layoutX="400.0" layoutY="125.0" text="Metros cuadrados:" />
                         <Label layoutX="400.0" layoutY="159.0" text="Precio" />
@@ -90,14 +89,15 @@
                         <CheckBox fx:id="cbxAscensor" layoutX="536.0" layoutY="193.0" mnemonicParsing="false" />
                         <CheckBox fx:id="cbxGaraje" layoutX="536.0" layoutY="228.0" mnemonicParsing="false" />
                         <TextField fx:id="txtPrecio" layoutX="536.0" layoutY="155.0" prefWidth="100.0" />
-                        <TableView fx:id="tablaViviendas" layoutX="46.0" layoutY="87.0" onMouseClicked="#tableViewVivendasOnClick" prefHeight="324.0" prefWidth="312.0">
+                        <TableView fx:id="tablaViviendas" layoutX="66.0" layoutY="87.0" onMouseClicked="#tableViewVivendasOnClick" prefHeight="324.0" prefWidth="312.0">
                           <columns>
                             <TableColumn fx:id="columnaIDVivienda" prefWidth="82.0" text="ID" />
                             <TableColumn fx:id="columnaDireccion" prefWidth="229.0" text="Dirección" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btnModificarVivienda" layoutX="490.0" layoutY="309.0" mnemonicParsing="false" onAction="#btnModificarViviendaOnClick" text="Modificar" />
-                        <Button fx:id="btnBorrarVivienda" layoutX="605.0" layoutY="309.0" mnemonicParsing="false" onMouseClicked="#btnBorrarViviendaOnClick" text="Borrar" />
+                        <Button fx:id="btnModificarVivienda" layoutX="560.0" layoutY="309.0" mnemonicParsing="false" onAction="#btnModificarViviendaOnClick" text="Modificar" />
+                        <Button fx:id="btnBorrarVivienda" layoutX="747.0" layoutY="309.0" mnemonicParsing="false" onMouseClicked="#btnBorrarViviendaOnClick" text="Borrar" />
+                        <Label fx:id="lblResultadoVivienda" layoutX="400.0" layoutY="394.0" prefHeight="17.0" prefWidth="312.0" />
                      </children>
                   </AnchorPane>
                </content>
@@ -113,7 +113,7 @@
                         <Label alignment="CENTER" layoutX="498.0" layoutY="30.0" prefHeight="17.0" prefWidth="225.0" text="Viviendas" />
                         <TextField fx:id="txtBuscarPropietario" layoutX="127.0" layoutY="60.0" prefHeight="25.0" prefWidth="250.0" promptText="Buscar propietario" />
                         <TextField fx:id="txtBuscarVivienda" layoutX="473.0" layoutY="60.0" prefHeight="25.0" prefWidth="250.0" promptText="Buscar vivienda" />
-                        <Label fx:id="lblResultado" layoutX="230.0" layoutY="438.0" prefHeight="17.0" prefWidth="388.0" />
+                        <Label fx:id="lblResultadoVincular" layoutX="230.0" layoutY="438.0" prefHeight="17.0" prefWidth="388.0" />
                      </children>
                   </AnchorPane>
               </content>
