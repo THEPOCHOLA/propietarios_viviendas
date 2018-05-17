@@ -5,6 +5,7 @@ import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -19,6 +20,7 @@ public class MainApp extends Application {
         
         stage.setTitle("Proyecto Propietarios - Casas");
         stage.setScene(scene);
+        stage.getIcons().add(new Image("/images/icon.png"));
         stage.show();
         stage.setResizable(false);
     }
