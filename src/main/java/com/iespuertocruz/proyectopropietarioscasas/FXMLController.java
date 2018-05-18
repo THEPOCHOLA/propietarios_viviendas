@@ -1,14 +1,16 @@
 package com.iespuertocruz.proyectopropietarioscasas;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -20,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**
@@ -209,7 +212,7 @@ public class FXMLController implements Initializable {
     }
 
     @FXML
-    private void btnBorrarPropietarioOnClick(MouseEvent event) {
+    private void btnBorrarPropietarioOnClick(MouseEvent event) throws IOException {
         actualizarArrayListAlmacenPropietarios();
         p = tableViewPropietariosOnClick(event);
         GestionDatos.borrarPropietario(p);
@@ -226,7 +229,7 @@ public class FXMLController implements Initializable {
     }
 
     @FXML
-    private Propietario tableViewPropietariosOnClick(MouseEvent event) {
+    private Propietario tableViewPropietariosOnClick(MouseEvent event) throws IOException {
         actualizarArrayListAlmacenPropietarios();
         Dato d = (Dato) tablaPropietarios.getSelectionModel().getSelectedItem();
         int posicion = Almacen.buscarPropietario(d.getDni());
@@ -244,6 +247,16 @@ public class FXMLController implements Initializable {
         btnModificarPropietario.setVisible(true);
         btnAnhadirProp.setVisible(false);
         btnReiniciarAnhiadir.setVisible(true);
+        //_____________________________________
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml")); 
+        Scene scene = new Scene(root); 
+        Stage stage = new Stage(); 
+        scene.getStylesheets().add("/styles/Styles.css"); 
+        stage.setTitle("Propietarios y Casas con BBDD"); 
+        stage.centerOnScreen(); 
+        stage.setScene(scene); 
+        stage.show(); 
+        //-------------------------------------
         return p;
     }
 
