@@ -13,8 +13,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iespuertocruz.proyectopropietarioscasas.FXMLController">
 
@@ -69,6 +67,7 @@
                         <Button fx:id="btnModificarPropietario" layoutX="634.0" layoutY="206.0" mnemonicParsing="false" onMouseClicked="#btnModificarPropietarioOnClick" text="Modificar" visible="false" />
 
                         <Label fx:id="lblResultadoPropietario" layoutX="450.0" layoutY="392.0" prefHeight="17.0" prefWidth="339.0" textFill="#078a03" />
+                        <Button fx:id="btnReiniciarAnhiadir" layoutX="450.0" layoutY="236.0" mnemonicParsing="false" onAction="#btnReiniciarAnhiadirOnClick" prefHeight="25.0" prefWidth="330.0" text="Nuevo Propietario" visible="false" />
 
                      </children>
                   </AnchorPane>
@@ -97,17 +96,10 @@
                             <TableColumn fx:id="columnaDireccion" prefWidth="229.0" text="Dirección" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btnModificarVivienda" layoutX="560.0" layoutY="309.0" mnemonicParsing="false" onAction="#btnModificarViviendaOnClick" text="Modificar" visible="false" />
+                        <Button fx:id="btnModificarVivienda" layoutX="560.0" layoutY="309.0" mnemonicParsing="false" onMouseClicked="#btnModificarViviendaOnClick" text="Modificar" visible="false" />
                         <Button fx:id="btnBorrarVivienda" layoutX="747.0" layoutY="309.0" mnemonicParsing="false" onMouseClicked="#btnBorrarViviendaOnClick" text="Borrar" visible="false" />
-                        <Label fx:id="lblResultadoVivienda" layoutX="400.0" layoutY="394.0" prefHeight="17.0" prefWidth="312.0">
-                           <textFill>
-                              <LinearGradient endX="1.0" endY="1.0">
-                                 <stops>
-                                    <Stop color="BLACK" />
-                                    <Stop color="WHITE" offset="1.0" />
-                                 </stops>
-                              </LinearGradient>
-                           </textFill></Label>
+                        <Label fx:id="lblResultadoVivienda" layoutX="400.0" layoutY="394.0" prefHeight="17.0" prefWidth="420.0" textFill="#19d001" />
+                        <Button fx:id="btnNuevaVivienda" layoutX="402.0" layoutY="344.0" mnemonicParsing="false" onAction="#btnNuevaViviendaOnClick" prefHeight="25.0" prefWidth="397.0" text="Nueva Vivienda" visible="false" />
                      </children>
                   </AnchorPane>
                </content>
@@ -116,14 +108,14 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="lvVincularPropietarios" layoutX="127.0" layoutY="83.0" onMouseClicked="#listViewOnClick" prefHeight="300.0" prefWidth="250.0" />
-                        <ListView fx:id="lvVincularViviendas" layoutX="473.0" layoutY="83.0" prefHeight="300.0" prefWidth="250.0" />
-                        <Button fx:id="btnVincular" layoutX="394.0" layoutY="407.0" mnemonicParsing="false" text="Vincular" />
+                        <ListView fx:id="lvVincularPropietarios" layoutX="127.0" layoutY="83.0" onMouseClicked="#listViewVincularPropietariosOnClick" prefHeight="300.0" prefWidth="250.0" />
+                        <ListView fx:id="lvVincularViviendas" layoutX="473.0" layoutY="83.0" onMouseClicked="#listViewVincularViviendasOnClick" prefHeight="300.0" prefWidth="250.0" />
+                        <Button fx:id="btnVincular" layoutX="394.0" layoutY="407.0" mnemonicParsing="false" onAction="#btnVincularOnClick" text="Vincular" />
                         <Label alignment="CENTER" layoutX="127.0" layoutY="30.0" prefWidth="225.0" text="Propietarios" />
                         <Label alignment="CENTER" layoutX="498.0" layoutY="30.0" prefHeight="17.0" prefWidth="225.0" text="Viviendas" />
-                        <TextField fx:id="txtBuscarPropietario" layoutX="127.0" layoutY="60.0" onKeyPressed="#buscarPropietario" prefHeight="25.0" prefWidth="250.0" promptText="Buscar propietario" />
-                        <TextField fx:id="txtBuscarVivienda" layoutX="473.0" layoutY="60.0" prefHeight="25.0" prefWidth="250.0" promptText="Buscar vivienda" />
-                        <Label fx:id="lblResultadoVincular" layoutX="230.0" layoutY="438.0" prefHeight="17.0" prefWidth="388.0" />
+                        <TextField fx:id="txtBuscarPropietario" layoutX="127.0" layoutY="60.0" onKeyPressed="#buscarPropietarioOnClick" prefHeight="25.0" prefWidth="250.0" promptText="Buscar propietario" />
+                        <TextField fx:id="txtBuscarVivienda" layoutX="473.0" layoutY="60.0" onKeyPressed="#buscarViviendaOnClick" prefHeight="25.0" prefWidth="250.0" promptText="Buscar vivienda" />
+                        <Label fx:id="lblResultadoVincular" layoutX="230.0" layoutY="438.0" prefHeight="17.0" prefWidth="388.0" textAlignment="CENTER" textFill="#246b25f2" />
                      </children>
                   </AnchorPane>
               </content>

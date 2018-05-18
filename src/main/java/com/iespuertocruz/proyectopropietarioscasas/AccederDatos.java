@@ -24,8 +24,9 @@ public class AccederDatos {
 //        Clase
         String jdbcUrl = "jdbc:mysql://172.19.99.30/PropietariosViviendasDB?serverTimezone=UTC";
 //        Casa Iván
-//        String jdbcUrl = "jdbc:mysql://192.168.1.61/PropietariosViviendasDB?serverTimezone=UTC";
-
+//        String jdbcUrl = "jdbc:mysql://192.168.1.147/PropietariosViviendasDB?serverTimezone=UTC";
+//        Casa Bea
+//        String jdbcUrl = "jdbc:mysql://192.168.56.101/PropietariosViviendasDB?serverTimezone=UTC";
         String usuario = "root";
         String clave = "1q2w3e4r";
         

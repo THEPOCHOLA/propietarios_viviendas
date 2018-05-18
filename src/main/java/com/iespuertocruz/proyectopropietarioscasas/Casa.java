@@ -58,5 +58,10 @@ public class Casa {
         this.identificador = identificador;
         this.direccion = direccion;
     }
+
+    @Override
+    public String toString() {
+        return identificador + ", " + direccion;
+    }
     
 }

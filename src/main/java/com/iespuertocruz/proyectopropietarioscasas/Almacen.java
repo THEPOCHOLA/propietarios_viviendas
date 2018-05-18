@@ -54,12 +54,12 @@ public class Almacen {
     public static int buscarCasa(int id){
         int i = 0;
         int resultado = -1;
-        for (Propietario propietario : propietarios) {
-            //El equals es lo que hace que funcione!!!!!!!!!!!!!!!!!!!!
-            if(propietario.dni.equals(id)){
+        for (Casa casas : casas) {
+            //El equals es lo que hace que funcione!
+            if(casas.identificador == id){
                 resultado = i;
             }
-            System.out.println(propietarios.get(i));
+            System.out.println(casas.identificador);
             i++;
         }
         return resultado;

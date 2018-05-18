@@ -29,7 +29,6 @@ import javafx.stage.StageStyle;
  */
 public class FXMLController implements Initializable {
 
-    int contador = 0;
     Casa c;
     Propietario p;
     @FXML
@@ -54,9 +53,9 @@ public class FXMLController implements Initializable {
     @FXML
     private TextField txtPrecio;
     @FXML
-    private ListView<ArrayList<Propietario>> lvVincularPropietarios;
+    private ListView<Propietario> lvVincularPropietarios;
     @FXML
-    private ListView<?> lvVincularViviendas;
+    private ListView<Casa> lvVincularViviendas;
     @FXML
     private Button btnVincular;
     @FXML
@@ -93,36 +92,65 @@ public class FXMLController implements Initializable {
     private Label lblResultadoVivienda;
     @FXML
     private Label lblResultadoVincular;
+    @FXML
+    private Button btnReiniciarAnhiadir;
+    @FXML
+    private Button btnNuevaVivienda;
+
+    private Propietario propietarioAVincular;
+    private Casa viviendaAVincular;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        try {
-//            AccederDatos.mysql("", "", "op");
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//            Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
-//            dialogoAyuda.setTitle("ERROR");
-//            dialogoAyuda.setHeaderText(null);
-//            dialogoAyuda.setContentText("No se ha podido conectar a la base de datos");
-//            dialogoAyuda.initStyle(StageStyle.UTILITY);
-//            dialogoAyuda.showAndWait();
-//            System.exit(0);
-//        }
-        c = new Casa();
-        p = new Propietario();
         mostrarEnTablaPropietario();
         mostrarEnTablaVivienda();
         // ForEach que añade al ArrayList los valores de la Tabla Propietarios.
+        actualizarArrayListAlmacenPropietarios();
+        // ForEach que añade al ArrayList los valores de la Tabla Viviendas.
+        actualizarArrayListAlmacenViviendas();
+
+        mostrarTodoEnListViewViviendaVincular();
+        mostrarTodoEnListViewPropietarioVincular();
+    }
+
+    private void mostrarTodoEnListViewViviendaVincular() {
+        lvVincularViviendas.getItems().clear();
+        for (Casa casa : Almacen.casas) {
+            lvVincularViviendas.getItems().add(casa);
+        }
+    }
+
+    private void mostrarTodoEnListViewPropietarioVincular() {
+        lvVincularPropietarios.getItems().clear();
+        for (Propietario prop : Almacen.propietarios) {
+            lvVincularPropietarios.getItems().add(prop);
+        }
+    }
+
+    private void actualizarArrayListAlmacenViviendas() {
+        Almacen.casas.clear();
+        for (Dato datosVivienda : datosViviendas) {
+            Almacen.agregarCasa(new Casa(datosVivienda.getIdentificador(), datosVivienda.getDireccion(), datosVivienda.getMetrosCuadrados(), datosVivienda.getGaraje(), datosVivienda.getAscensor(), datosVivienda.getPrecio()));
+        }
+    }
+
+    private void actualizarArrayListAlmacenPropietarios() {
+        Almacen.propietarios.clear();
         for (Dato dato : datos) {
             Almacen.agregarPropietario(new Propietario(dato.getNombre(), dato.getApellidos(), dato.getDni()));
         }
-        for (Dato datosVivienda : datosViviendas) {
-            Almacen.agregarCasa(new Casa(datosVivienda.getIdentificador(), datosVivienda.getDireccion()));
-            
-        }
+    }
+
+    private void mostrarEnTablaPropietario() {
+        datos = GestionDatos.mostrarDatosPropietarios();
+        columnaDNI.setCellValueFactory(new PropertyValueFactory<Dato, String>("dni"));
+        columnaNombre.setCellValueFactory(new PropertyValueFactory<Dato, String>("nombre"));
+        columnaApellidos.setCellValueFactory(new PropertyValueFactory<Dato, String>("apellidos"));
+        tablaPropietarios.setItems(FXCollections.observableArrayList(datos));
+
     }
 
     @FXML
@@ -131,9 +159,7 @@ public class FXMLController implements Initializable {
         String nombre = txtNombre.getText();
         String apellidos = txtApellidos.getText();
         boolean insert = GestionDatos.insertarPropietario(dni, nombre, apellidos);
-        Almacen.agregarPropietario(new Propietario(nombre, apellidos, dni));
         if (insert) {
-
             lblResultadoPropietario.setText("Propietario insertado con éxito");
         } else {
             Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
@@ -142,28 +168,67 @@ public class FXMLController implements Initializable {
             dialogoAyuda.setContentText("No se ha podido insertar el usuario en la base de datos");
             dialogoAyuda.initStyle(StageStyle.UTILITY);
             dialogoAyuda.showAndWait();
-
         }
-        mostrarEnTablaPropietario();
         txtDNI.setText("");
         txtNombre.setText("");
         txtApellidos.setText("");
         btnBorrarPropietario.setVisible(false);
         btnModificarPropietario.setVisible(false);
+        actualizarArrayListAlmacenPropietarios();
+        mostrarEnTablaPropietario();
     }
 
-    private void mostrarEnTablaPropietario() {
-        columnaDNI.setCellValueFactory(new PropertyValueFactory<Dato, String>("dni"));
-        columnaNombre.setCellValueFactory(new PropertyValueFactory<Dato, String>("nombre"));
-        columnaApellidos.setCellValueFactory(new PropertyValueFactory<Dato, String>("apellidos"));
-        datos = GestionDatos.mostrarDatosPropietarios();
-        tablaPropietarios.setItems(FXCollections.observableArrayList(datos));
+    @FXML
+    private void btnModificarPropietarioOnClick(MouseEvent event) {
 
+        actualizarArrayListAlmacenPropietarios();
+        String dni = txtDNI.getText();
+        String nombre = txtNombre.getText();
+        String apellidos = txtApellidos.getText();
+        boolean insert = GestionDatos.modificarPopietario(dni, nombre, apellidos);
+        if (insert) {
+            lblResultadoPropietario.setText("Propietario modificado con éxito");
+        } else {
+            Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
+            dialogoAyuda.setTitle("ERROR");
+            dialogoAyuda.setHeaderText(null);
+            dialogoAyuda.setContentText("No se ha podido modificar el usuario en la base de datos");
+            dialogoAyuda.initStyle(StageStyle.UTILITY);
+            dialogoAyuda.showAndWait();
+        }
+        txtNombre.setText("");
+        txtApellidos.setText("");
+        txtDNI.setText("");
+        txtDNI.setDisable(false);
+        btnBorrarPropietario.setVisible(false);
+        btnModificarPropietario.setVisible(false);
+        btnReiniciarAnhiadir.setVisible(false);
+        mostrarEnTablaPropietario();
+        actualizarArrayListAlmacenPropietarios();
+        mostrarTodoEnListViewPropietarioVincular();
+    }
+
+    @FXML
+    private void btnBorrarPropietarioOnClick(MouseEvent event) {
+        actualizarArrayListAlmacenPropietarios();
+        p = tableViewPropietariosOnClick(event);
+        GestionDatos.borrarPropietario(p);
+        btnBorrarPropietario.setVisible(false);
+        btnModificarPropietario.setVisible(false);
+        btnReiniciarAnhiadir.setVisible(false);
+        btnAnhadirProp.setVisible(true);
+        txtDNI.setText("");
+        txtNombre.setText("");
+        txtApellidos.setText("");
+        mostrarEnTablaPropietario();
+        actualizarArrayListAlmacenPropietarios();
+        txtDNI.setDisable(false);
     }
 
     @FXML
     private Propietario tableViewPropietariosOnClick(MouseEvent event) {
-        Dato d = tablaPropietarios.getSelectionModel().getSelectedItem();
+        actualizarArrayListAlmacenPropietarios();
+        Dato d = (Dato) tablaPropietarios.getSelectionModel().getSelectedItem();
         int posicion = Almacen.buscarPropietario(d.getDni());
         //Si la posición es -1 es que no se han añadido datos
         if (posicion != -1) {
@@ -177,54 +242,29 @@ public class FXMLController implements Initializable {
         txtDNI.setDisable(true);
         btnBorrarPropietario.setVisible(true);
         btnModificarPropietario.setVisible(true);
-        mostrarEnTablaPropietario();
+        btnAnhadirProp.setVisible(false);
+        btnReiniciarAnhiadir.setVisible(true);
         return p;
     }
 
     @FXML
-    private void btnModificarPropietarioOnClick(MouseEvent event) {
-        p = tableViewPropietariosOnClick(event);
-        String dni = txtDNI.getText();
-        String nombre = txtNombre.getText();
-        String apellidos = txtApellidos.getText();
-        
-        boolean insert = GestionDatos.modificarPopietario(dni, nombre, apellidos);
-        Propietario aModificar = Almacen.propietarios.get(Almacen.buscarPropietario(dni));
-        aModificar.apellidos = apellidos;
-        aModificar.nombre = nombre;
-        if (insert) {
-            lblResultadoPropietario.setText("Propietario modificado con éxito");
-        } else {
-            Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
-            dialogoAyuda.setTitle("ERROR");
-            dialogoAyuda.setHeaderText(null);
-            dialogoAyuda.setContentText("No se ha podido modificar el usuario en la base de datos");
-            dialogoAyuda.initStyle(StageStyle.UTILITY);
-            dialogoAyuda.showAndWait();
-        }
-        mostrarEnTablaPropietario();
-    }
-
-    @FXML
-    private void btnBorrarPropietarioOnClick(MouseEvent event) {
-        p = tableViewPropietariosOnClick(event);
-        txtDNI.disableProperty();
-        txtNombre.disableProperty();
-        txtApellidos.disableProperty();
-        GestionDatos.borrarPropietario(p);
-        mostrarEnTablaPropietario();
-        btnBorrarPropietario.setVisible(false);
-        btnModificarPropietario.setVisible(false);
+    private void btnReiniciarAnhiadirOnClick(ActionEvent event) {
         txtDNI.setText("");
+        txtDNI.setDisable(false);
         txtNombre.setText("");
         txtApellidos.setText("");
+        btnBorrarPropietario.setVisible(false);
+        btnModificarPropietario.setVisible(false);
+        btnAnhadirProp.setVisible(true);
+        btnReiniciarAnhiadir.setVisible(false);
     }
-//----------------------------------------------------------------------------------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
     @FXML
     /**
      * Método para añadir Viviendas, en principio solo en la Base de Datos.
      */
+
     private void btnAnhadirVivienda(ActionEvent event) {
         int ascensor;
         int garaje;
@@ -244,12 +284,12 @@ public class FXMLController implements Initializable {
         }
         // La variable insert obtentra true si se reailza el insert, o false si no se realiza.
         boolean insert = GestionDatos.anhadirVivienda(direccion, metrosCuadrados, precio, ascensor, garaje);
-        int identificador = GestionDatos.idCasa(direccion, metrosCuadrados, precio, ascensor, garaje);
+//        int identificador = GestionDatos.idCasa(direccion, metrosCuadrados, precio, ascensor, garaje);
         // Se le añaden los valores a la Clase Casa, falta el identificador, que se realiza por consulta.
-        Almacen.agregarCasa(new Casa(identificador, direccion, metrosCuadrados, garaje, ascensor, precio));
+//        Almacen.agregarCasa(new Casa(identificador, direccion, metrosCuadrados, garaje, ascensor, precio));
         if (insert) {
             //Añadir el ID en la el label, debatir, porque sale en la tabla
-            lblResultadoPropietario.setText("Propietario insertado con éxito");
+            lblResultadoVivienda.setText("Vivienda insertada con éxito");
         } else {
             Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
             dialogoAyuda.setTitle("ERROR");
@@ -259,7 +299,8 @@ public class FXMLController implements Initializable {
             dialogoAyuda.showAndWait();
         }
         mostrarEnTablaVivienda();
-        
+        actualizarArrayListAlmacenViviendas();
+
     }
 
     private void mostrarEnTablaVivienda() {
@@ -271,19 +312,71 @@ public class FXMLController implements Initializable {
     }
 
     @FXML
-    /**
-     * Método para modificar datos de la vivienda, en principio solo en la Base
-     * de Datos.
-     */
-    private void btnModificarViviendaOnClick(ActionEvent event) {
+    private void btnNuevaViviendaOnClick(ActionEvent event) {
+        txtDireccion.setText("");
+        txtMetros.setText("");
+        txtPrecio.setText("");
+        cbxAscensor.setSelected(false);
+        cbxGaraje.setSelected(false);
+        btnBorrarVivienda.setVisible(false);
+        btnModificarVivienda.setVisible(false);
+        btnAnhadirVivienda.setVisible(true);
+        btnNuevaVivienda.setVisible(false);
     }
 
     @FXML
     /**
-     * Método para borrar viviendas, en principio solo en la Base de Datos.
+     * Método para modificar datos de la vivienda, en principio solo en la Base
+     * de Datos.
      */
+    private void btnModificarViviendaOnClick(MouseEvent event) {
+        actualizarArrayListAlmacenViviendas();
+        
+        int ascensor;
+        int garaje;
+        String direccion = txtDireccion.getText();
+        int metrosCuadrados = Integer.parseInt(txtMetros.getText());
+        double precio = Double.parseDouble(txtPrecio.getText());
+        // Se hace un if para saber si esta seleccionado o no y así saber si es true o false.
+        if (cbxAscensor.isSelected()) {
+            ascensor = 1;
+        } else {
+            ascensor = 0;
+        }
+        if (cbxGaraje.isSelected()) {
+            garaje = 1;
+        } else {
+            garaje = 0;
+        }
+        // La variable insert obtentra true si se reailza el insert, o false si no se realiza.
+        System.out.println(direccion + ",   " + metrosCuadrados + ",   " + precio + ",   " + ascensor + ",   " + garaje);
+        c = tableViewVivendasOnClick(event);
+        boolean insert = GestionDatos.modificarVivienda(direccion, metrosCuadrados, precio, ascensor, garaje, c);
+
+        if (insert) {
+            lblResultadoVivienda.setText("Vivienda modificada con éxito");
+        } else {
+            Alert dialogoAyuda = new Alert(Alert.AlertType.WARNING);
+            dialogoAyuda.setTitle("ERROR");
+            dialogoAyuda.setHeaderText(null);
+            dialogoAyuda.setContentText("No se ha podido modificar la vivienda en la base de datos");
+            dialogoAyuda.initStyle(StageStyle.UTILITY);
+            dialogoAyuda.showAndWait();
+        }
+        txtDireccion.setText("");
+        txtMetros.setText("");
+        txtPrecio.setText("");
+        cbxAscensor.setSelected(false);
+        cbxGaraje.setSelected(false);
+        mostrarEnTablaVivienda();
+        actualizarArrayListAlmacenViviendas();
+        mostrarTodoEnListViewViviendaVincular();
+    }
+
+    @FXML
     private Casa tableViewVivendasOnClick(MouseEvent event) {
-        Dato d = tablaViviendas.getSelectionModel().getSelectedItem();
+        actualizarArrayListAlmacenViviendas();
+        Dato d = (Dato) tablaViviendas.getSelectionModel().getSelectedItem();
         int posicion = Almacen.buscarCasa(d.getIdentificador());
         //Si la posición es -1 es que no se han añadido datos
         if (posicion != -1) {
@@ -291,10 +384,23 @@ public class FXMLController implements Initializable {
         } else {
             System.out.println("No está en el arrayList");
         }
-        txtID.setText(c.identificador+"");
         txtDireccion.setText(c.direccion);
+        txtPrecio.setText(c.precio + "");
+        txtMetros.setText(c.metros + "");
+        if (c.garaje == 1) {
+            cbxGaraje.setSelected(true);
+        } else {
+            cbxGaraje.setSelected(false);
+        }
+        if (c.ascensor == 1) {
+            cbxAscensor.setSelected(true);
+        } else {
+            cbxAscensor.setSelected(false);
+        }
         btnBorrarVivienda.setVisible(true);
         btnModificarVivienda.setVisible(true);
+        btnAnhadirVivienda.setVisible(false);
+        btnNuevaVivienda.setVisible(true);
         return c;
     }
 
@@ -306,23 +412,58 @@ public class FXMLController implements Initializable {
         btnBorrarVivienda.setVisible(false);
         btnModificarVivienda.setVisible(false);
     }
+//------------------------------------------------------------------------------------------------------------------------------------------------------
+    @FXML
+    private void listViewVincularPropietariosOnClick(MouseEvent event) {
+        propietarioAVincular = lvVincularPropietarios.getSelectionModel().getSelectedItem();
+    }
 
     @FXML
-    private void buscarPropietario(KeyEvent event) {
+    private void listViewVincularViviendasOnClick(MouseEvent event) {
+        viviendaAVincular = lvVincularViviendas.getSelectionModel().getSelectedItem();
+    }
+
+    @FXML
+    private void buscarPropietarioOnClick(KeyEvent event) {
         ArrayList<Propietario> propBuscar = new ArrayList<Propietario>();
-        if (event.getCode().toString().equals("ENTER")){
-            String propietarioBuscar = txtBuscarPropietario.getText();
-            propBuscar = GestionDatos.buscarPropietario(propietarioBuscar);
-            lvVincularPropietarios.getItems().add(propBuscar);
-            
+        if (event.getCode().toString().equals("ENTER")) {
+            lvVincularPropietarios.getItems().clear();
+            if (txtBuscarPropietario.getText().isEmpty()) {
+                mostrarTodoEnListViewPropietarioVincular();
+            } else {
+                String propietarioBuscar = txtBuscarPropietario.getText();
+                propBuscar = GestionDatos.buscarPropietario(propietarioBuscar);
+                for (Propietario propietario : propBuscar) {
+                    lvVincularPropietarios.getItems().add(propietario);
+                }
+            }
         }
     }
 
     @FXML
-    private void listViewOnClick(MouseEvent event) {
-        ArrayList<Propietario> pList = lvVincularPropietarios.getSelectionModel().getSelectedItem();
-        Alert dialog = new Alert(Alert.AlertType.WARNING);
-        dialog.setContentText("Datos: \n"+ pList.toString());
-        dialog.showAndWait();
-    }       
+    private void buscarViviendaOnClick(KeyEvent event) {
+        ArrayList<Casa> viviendaBuscar = new ArrayList<Casa>();
+        if (event.getCode().toString().equals("ENTER")){
+            lvVincularViviendas.getItems().clear();
+            if(txtBuscarVivienda.getText().isEmpty()){
+                mostrarTodoEnListViewViviendaVincular();
+            }else{
+                String vivBuscar = txtBuscarVivienda.getText();
+                viviendaBuscar = GestionDatos.buscarCasa(vivBuscar);
+                for (Casa vivienda : viviendaBuscar) {
+                    lvVincularViviendas.getItems().add(vivienda);
+                }
+            }
+
+        }
+    }
+    
+    @FXML
+    private void btnVincularOnClick(ActionEvent event) {
+        boolean result = GestionDatos.vincularPropietarioVivienda(propietarioAVincular, viviendaAVincular);
+        if (result) {
+            lblResultadoVincular.setText("Se ha vinculado con éxito");
+        }
+    }
+
 }

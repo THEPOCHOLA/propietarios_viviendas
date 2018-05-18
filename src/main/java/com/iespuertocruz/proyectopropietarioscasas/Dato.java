@@ -5,6 +5,8 @@
  */
 package com.iespuertocruz.proyectopropietarioscasas;
 
+import javafx.beans.property.ReadOnlyIntegerWrapper;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -51,11 +53,21 @@ public class Dato {
     //                                                                      VIVIENDAS
     public SimpleIntegerProperty identificador;
     public SimpleStringProperty direccion;
-    
-    public Dato(int identificador, String direccion) {
+    public SimpleIntegerProperty metrosCuadrados;
+    public SimpleDoubleProperty precio;
+    public SimpleIntegerProperty garaje;
+    public SimpleIntegerProperty ascensor;
+
+    public Dato(int identificador, String direccion, int metrosCuadrados, double precio, int garaje, int ascensor) {
         this.identificador = new SimpleIntegerProperty(identificador);
         this.direccion = new SimpleStringProperty(direccion);
+        this.metrosCuadrados = new SimpleIntegerProperty(metrosCuadrados);
+        this.precio = new SimpleDoubleProperty(precio) ;
+        this.garaje = new SimpleIntegerProperty(garaje);
+        this.ascensor = new SimpleIntegerProperty(ascensor);
     }
+    
+    
     
     public int getIdentificador() {
         return identificador.get();
@@ -73,5 +85,35 @@ public class Dato {
         this.direccion.set(direccion);
     }
     
+    public int getMetrosCuadrados() {
+        return metrosCuadrados.get();
+    }
     
+    public double getPrecio() {
+        return precio.get();
+    }
+    
+    public int getGaraje() {
+        return garaje.get();
+    }
+    
+    public int getAscensor() {
+        return ascensor.get();
+    }
+    
+    public void setMetrosCuadrados(int metrosCuadrados) {
+        this.metrosCuadrados.set(metrosCuadrados);
+    }
+    
+    public void setPrecio(double precio) {
+        this.precio.set(precio);
+    }
+    
+    public void setGaraje(int garaje) {
+        this.garaje.set(garaje);
+    }
+    
+    public void setAscensor(int ascensor) {
+        this.ascensor.set(ascensor);
+    }
 }
